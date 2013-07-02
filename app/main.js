@@ -12,26 +12,30 @@ chrome.app.runtime.onLaunched.addListener(function(intentData) {
 });
 
 function isItGoneRain(){
+
   function gotLocation(location){
-      var latlong = location.coords.latitude + ',' + location.coords.longitude;
-      var apiKey = 252529335fa39680e530966f42ef1c56;
-      var forecastURL = 'https://api.forecast.io/'+apiKey+'/'+latlong;
-      var forecastRequest = new xmlHttpRequest();
-      forecastRequest.onreadystatechange = function(response){
-          alert(response);
-      }
-      forecastRequest.open("get", forecastURL);
+    var latlong = location.coords.latitude + ',' + location.coords.longitude;
+    var apiKey = 252529335fa39680e530966f42ef1c56;
+    var forecastURL = 'https://api.forecast.io/'+apiKey+'/'+latlong;
+    var forecastRequest = new xmlHttpRequest();
+    forecastRequest.onreadystatechange = function(response){
+      alert(response);
     }
-    function locationError (e){
-      console.log(e);
-    }
-    if (navigator.geolocation) {
-     navigator.geolocation.getCurrentPosition(gotLocation, locationError);
-    } else {
-      error('not supported');
-    }
- 
+    forecastRequest.open("get", forecastURL);
+  }
+  
+  function locationError (e){
+    console.log(e);
+  }
+
+  if (navigator.geolocation) {
+   navigator.geolocation.getCurrentPosition(gotLocation, locationError);
+  } else {
+    error('not supported');
+  }
 }
+
+
 function notify() {
   var havePermission = window.webkitNotifications.checkPermission();
   if (havePermission == 0) {

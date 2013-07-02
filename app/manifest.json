@@ -16,6 +16,6 @@
   "permissions": [
     "notifications",
     "geolocation",
-    "*://*.forecast.io"
+    "https://*.forecast.io"
   ]
 }
