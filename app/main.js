@@ -17,11 +17,11 @@ function isItGoneRain(){
     var latlong = location.coords.latitude + ',' + location.coords.longitude;
     var apiKey = 252529335fa39680e530966f42ef1c56;
     var forecastURL = 'https://api.forecast.io/'+apiKey+'/'+latlong;
-    var forecastRequest = new xmlHttpRequest();
-    forecastRequest.onreadystatechange = function(response){
-      alert(response);
-    }
-    forecastRequest.open("get", forecastURL);
+    $http.get(forecastURL).success(
+      function(response){
+        notify(response)
+      }
+      )
   }
   
   function locationError (e){
@@ -36,14 +36,12 @@ function isItGoneRain(){
 }
 
 
-function notify() {
+function notify(message) {
   var havePermission = window.webkitNotifications.checkPermission();
   if (havePermission == 0) {
     // 0 is PERMISSION_ALLOWED
     var notification = window.webkitNotifications.createNotification(
-      'http://i.stack.imgur.com/dmHl0.png',
-      'Chrome notification!',
-    	'Here is the notification text'
+      message
     );
     
     notification.onclick = function () {
@@ -60,5 +58,5 @@ var blank = document.getElementById('blank');
 
 var timeout = 
 	setInterval(function(){
-		notify();
+		isItGoneRain();
 	}, 5000);
