@@ -23,6 +23,7 @@ function isItGoneRain(){
       function(response){
         console.log(response);
         notify(response.minutely.summary, response.hourly.summary);
+        if(response.minutely.summary.indexOf('rain')){document.getElementById('gonerain').play();}
       }
       )
   }
@@ -44,14 +45,15 @@ function notify(title, subhead) {
   if (havePermission == 0) {
     // 0 is PERMISSION_ALLOWED
     var notification = window.webkitNotifications.createNotification(
-      'icon-128.png', title, subhead
+      'ollie.gif', title, subhead
     );
     
     notification.onclick = function () {
-      window.open("http://stackoverflow.com/a/13328397/1269037");
+      window.open("http://forecast.io");
       notification.close();
     }
     notification.show();
+    setTimeout(notification.hide, 15000);
   } else {
       window.webkitNotifications.requestPermission();
   }
@@ -60,9 +62,9 @@ function notify(title, subhead) {
 var blank = document.getElementById('blank');
 
 var timeout = 
-  setTimeout(function(){
-    isItGoneRain();
-  }, 1000);
+  setTimeout(
+    isItGoneRain
+  , 1000);
 
 
 
