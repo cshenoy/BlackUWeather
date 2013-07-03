@@ -10,12 +10,13 @@
   "default_locale": "en",
   "app": {
     "background": {
-      "scripts": ["main.js"]
+      "page": "index.html"
     }
   },
   "permissions": [
     "notifications",
     "geolocation",
-    "*://*.forecast.io/"
+    "*://*.forecast.io/",
+    "https://ajax.googleapis.com/"
   ]
 }

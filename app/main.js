@@ -10,16 +10,19 @@ chrome.app.runtime.onLaunched.addListener(function(intentData) {
         height: 309
     });
 });
-
+var app =angular.module("BlackUWeather", []);
+app.controller('OllieCtrl', function($scope, $http){
+  console.log("in the controller");
 function isItGoneRain(){
 
   function gotLocation(location){
     var latlong = location.coords.latitude + ',' + location.coords.longitude;
-    var apiKey = 252529335fa39680e530966f42ef1c56;
-    var forecastURL = 'https://api.forecast.io/'+apiKey+'/'+latlong;
+    var apiKey = '252529335fa39680e530966f42ef1c56';
+    var forecastURL = 'https://api.forecast.io/forecast/'+apiKey+'/'+latlong;
     $http.get(forecastURL).success(
       function(response){
-        notify(response)
+        console.log(response);
+        notify(response.minutely.summary, response.hourly.summary);
       }
       )
   }
@@ -36,12 +39,12 @@ function isItGoneRain(){
 }
 
 
-function notify(message) {
+function notify(title, subhead) {
   var havePermission = window.webkitNotifications.checkPermission();
   if (havePermission == 0) {
     // 0 is PERMISSION_ALLOWED
     var notification = window.webkitNotifications.createNotification(
-      message
+      'icon-128.png', title, subhead
     );
     
     notification.onclick = function () {
@@ -57,6 +60,10 @@ function notify(message) {
 var blank = document.getElementById('blank');
 
 var timeout = 
-	setInterval(function(){
-		isItGoneRain();
-	}, 5000);
+  setTimeout(function(){
+    isItGoneRain();
+  }, 1000);
+
+
+
+});
